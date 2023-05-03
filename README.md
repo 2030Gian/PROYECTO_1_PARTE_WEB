@@ -17,6 +17,6 @@ Crear una plataforma web que ayude a los estudiantes cachimbos adaptarse al ento
 
 ## Visión
 
-Brindar una educación de calidad, donde todos tengan las mismas oportunidades.
+Brindar una educación de calidad, donde todos tengan las mismas oportunidades y condiciones.
 
 
