@@ -55,8 +55,24 @@ class Cursos(db.Model):
 
     def __repr__(self):
         return f"Cursos(id={self.id}, nombre={self.nombre}, precio={self.precio})"
+    
+class Premium(Usuario):
+    __tablename__ = 'premium'
+    __mapper_args__ = {
+        'polymorphic_identity': 'miembro_pay',
+    }
+    def __init__(self, name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle):
+        super().__init__(name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle)
 
+class Freemium(Usuario):
+    __tablename__ = 'freemium'
+    __mapper_args__ = {
+        'polymorphic_identity': 'miembro_free',
+    }
+    def __init__(self, name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle):
+        super().__init__(name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle)
 
+    
 #routes
 
 
