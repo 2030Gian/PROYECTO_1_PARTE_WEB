@@ -1,5 +1,6 @@
 from flask import (
-    Flask, 
+    Flask,
+    render_template, 
     )
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -7,7 +8,7 @@ import uuid;
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(app)
 
 #Models
@@ -83,6 +84,10 @@ with app.app_context():
     db.create_all()
         
 #routes
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 
 # Run the app
