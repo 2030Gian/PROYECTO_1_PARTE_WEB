@@ -4,9 +4,10 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import uuid;
+from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@localhost:5432/'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(app)
 
 #Models
@@ -22,6 +23,8 @@ class Usuario(db.Model):
     fecha_nacimiento = db.Column(db.Date(), nullable=True)
     biografia = db.Column(db.String(), nullable=True)
     intereses = db.Column(db.String(), nullable=True)
+    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+
 
     def __init__(self, nombre, apellido, email, contraseña, foto=None, fecha_nacimiento=None, biografia=None, intereses=None):
         self.nombre = nombre
@@ -39,14 +42,17 @@ class Usuario(db.Model):
 
 class Cursos(db.Model):
     __tablename__ = 'Curso'
-    id = db.Column(db.String(7), nullable=False, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"))
+    id = db.Column(db.String(7), primary_key=True)
     nombre = db.Column(db.String(30), nullable=False)
     precio = db.Column(db.Float, nullable=False)
     descripcion = db.Column(db.String(500), nullable=False)
     foto = db.Column(db.String(500), nullable=True)
     cupos_disponibles = db.Column(db.Integer, nullable=False)
+    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+
 
     def __init__(self, nombre, precio, descripcion, foto, cupos_disponibles):
+        self.id = str(uuid.uuid4())
         self.nombre = nombre
         self.precio = precio
         self.descripcion = descripcion
@@ -55,6 +61,7 @@ class Cursos(db.Model):
 
     def __repr__(self):
         return f"Cursos(id={self.id}, nombre={self.nombre}, precio={self.precio})"
+
     
 class Premium(Usuario):
     __tablename__ = 'premium'
@@ -72,7 +79,9 @@ class Freemium(Usuario):
     def __init__(self, name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle):
         super().__init__(name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle)
 
-    
+with app.app_context():
+    db.create_all()
+        
 #routes
 
 
