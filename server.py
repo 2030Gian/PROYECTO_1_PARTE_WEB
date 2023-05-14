@@ -8,10 +8,12 @@ import uuid;
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(app)
 
 #Models
+
+from sqlalchemy import func
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
@@ -24,8 +26,7 @@ class Usuario(db.Model):
     fecha_nacimiento = db.Column(db.Date(), nullable=True)
     biografia = db.Column(db.String(), nullable=True)
     intereses = db.Column(db.String(), nullable=True)
-    fecha = db.Column(db.DateTime, default=datetime.utcnow)
-
+    created_at = db.Column(db.DateTime, default=func.now())
 
     def __init__(self, nombre, apellido, email, contraseña, foto=None, fecha_nacimiento=None, biografia=None, intereses=None):
         self.nombre = nombre
@@ -83,7 +84,25 @@ class Freemium(Usuario):
 with app.app_context():
     db.create_all()
         
+with app.app_context():
+    db.create_all()
+
+    new_user = Usuario(
+        nombre='John',
+        apellido='Doe',
+        email='johndoe@example.com',
+        contraseña='password',
+        foto='ruta_de_la_foto.jpg',
+        fecha_nacimiento=datetime(1990, 1, 1),
+        biografia='Soy un apasionado de la programación',
+        intereses='Python, desarrollo web'
+    )
+    db.session.add(new_user)
+    db.session.commit()
+   
 #routes
+
+
 
 @app.route('/', methods=['GET'])
 def index():
