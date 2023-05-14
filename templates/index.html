@@ -1,14 +1,14 @@
 <htm>
     <head>
-      <title>Mantenimiento de Empleados</title>
+      <title>EducaWeb Trantor</title>
       <style>
         .header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background-color: aqua;
+          background-color: #FF5733;
           color: black;
-          padding: 10px;
+          padding: 30px;
         }
         .header__item {
           cursor: pointer;
@@ -23,16 +23,16 @@
     </head>
     <body>
       <header class="header">
-        <img src="/static/images/logo.jpeg" alt="Logo" style="height: 50px;" />
-        <div class="header__item" onclick="showContent(0)">Employees</div>
-        <div class="header__item" onclick="showContent(1)">New Employee</div>
+        <img src="/static/images/trantor.png" alt="Logo" style="height: 150px;" />
+        <div class="header__item" onclick="showContent(0)">Cursos</div>
+        <div class="header__item" onclick="showContent(1)">Perfil</div>
       </header>
       <div class="body">
         <div class="body__item" id="section0">
-          <h1>Empoyees</h1>
+          <h1>Curso disponibles</h1>
         </div>
         <div class="body__item" id="section1">
-          <h1>New Employee</h1>
+          <h1> Crear Usuario </h1>
           <form
             action="create-employee"
             method="POST"
@@ -47,8 +47,12 @@
               <input type="text" name="lastname" id="lastname" />
             </div>
             <div>
-              <label for="age">Age:</label>
-              <input type="number" name="age" id="age" />
+              <label for="email">email:</label>
+              <input type="text" name="email" id="email" />
+            </div>
+            <div>
+              <label for="fechanacimiento">Fecha de nacimiento:</label>
+              <input type="date" name="fechanacimiento" id="fechanacimiento" />
             </div>
             <div>
               <label for="image">Photo:</label>
