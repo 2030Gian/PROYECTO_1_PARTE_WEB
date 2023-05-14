@@ -84,26 +84,7 @@ class Freemium(Usuario):
 with app.app_context():
     db.create_all()
         
-with app.app_context():
-    db.create_all()
-
-    new_user = Usuario(
-        nombre='John',
-        apellido='Doe',
-        email='johndoe@example.com',
-        contraseña='password',
-        foto='ruta_de_la_foto.jpg',
-        fecha_nacimiento=datetime(1990, 1, 1),
-        biografia='Soy un apasionado de la programación',
-        intereses='Python, desarrollo web'
-    )
-    db.session.add(new_user)
-    db.session.commit()
-   
 #routes
-
-
-
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
