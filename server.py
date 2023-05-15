@@ -23,18 +23,18 @@ class Usuario(db.Model):
     nombre = db.Column(db.String(), nullable=False)
     apellido = db.Column(db.String(), nullable=False)
     email = db.Column(db.String(), nullable=False)
-    contraseña = db.Column(db.String(), nullable=False)
+    contrase単a = db.Column(db.String(), nullable=False)
     foto = db.Column(db.String(), nullable=True)
     fecha_nacimiento = db.Column(db.Date(), nullable=True)
     biografia = db.Column(db.String(), nullable=True)
     intereses = db.Column(db.String(), nullable=True)
     created_at = db.Column(db.DateTime, default=func.now())
 
-    def __init__(self, nombre, apellido, email, contraseña, foto=None, fecha_nacimiento=None, biografia=None, intereses=None):
+    def __init__(self, nombre, apellido, email, contrase単a, foto=None, fecha_nacimiento=None, biografia=None, intereses=None):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
-        self.contraseña = contraseña
+        self.contrase単a = contrase単a
         self.foto = foto
         self.fecha_nacimiento = fecha_nacimiento
         self.biografia = biografia
@@ -86,23 +86,7 @@ class Freemium(Usuario):
 with app.app_context():
     db.create_all()
 
-    new_user = Usuario(
-        nombre='John',
-        apellido='Doe',
-        email='johndoe@example.com',
-        contraseña='password',
-        foto='ruta_de_la_foto.jpg',
-        fecha_nacimiento=datetime(1990, 1, 1),
-        biografia='Soy un apasionado de la programación',
-        intereses='Python, desarrollo web'
-    )
-    db.session.add(new_user)
-    db.session.commit()
-   
 #routes
-
-
-
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
