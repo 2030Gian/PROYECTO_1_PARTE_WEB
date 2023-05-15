@@ -1,81 +1,119 @@
-<htm>
-    <head>
-      <title>EducaWeb Trantor</title>
-      <style>
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: #FF5733;
-          color: black;
-          padding: 30px;
-        }
-        .header__item {
-          cursor: pointer;
-        }
-        .body__item {
-          display: none;
-        }
-        .body__item__active {
-          display: block;
-        }
-      </style>
-    </head>
-    <body>
-      <header class="header">
-        <img src="/static/images/trantor.png" alt="Logo" style="height: 150px;" />
-        <div class="header__item" onclick="showContent(0)">Cursos</div>
-        <div class="header__item" onclick="showContent(1)">Perfil</div>
-      </header>
-      <div class="body">
-        <div class="body__item" id="section0">
-          <h1>Curso disponibles</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <title> EducaWeb Trantor </title>
+</head>
+<body>
+    <div class="head">
+        <div class="TRANTOR">
+            <a href="#">TRANTOR</a>
         </div>
-        <div class="body__item" id="section1">
-          <h1> Crear Usuario </h1>
-          <form
-            action="create-employee"
-            method="POST"
-            enctype="multipart/form-data"
-          >
-            <div>
-              <label for="firstname">First Name:</label>
-              <input type="text" name="firstname" id="firstname" />
-            </div>
-            <div>
-              <label for="lastname">Last Name:</label>
-              <input type="text" name="lastname" id="lastname" />
-            </div>
-            <div>
-              <label for="email">email:</label>
-              <input type="text" name="email" id="email" />
-            </div>
-            <div>
-              <label for="fechanacimiento">Fecha de nacimiento:</label>
-              <input type="date" name="fechanacimiento" id="fechanacimiento" />
-            </div>
-            <div>
-              <label for="image">Photo:</label>
-              <input type="file" name="image" id="image" />
-            </div>
-            <div>
-              <input type="submit" value="Create" />
-            </div>
-          </form>
+        <nav class="navbar">
+            <a href="#">Inicio</a>
+            <a href="#">Cursos</a>
+            <a href="#">Planes</a>
+            <a href="login">Perfil</a>
+        </nav>
+    </div>
+
+    <header class="content header">
+        <h2 class="title">Inicio</h2>
+        <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+             Ipsam necessitatibus odio quisquam reprehenderit quas, 
+             obcaecati, harum hic molestiae sequi ipsa nihil id tempore explicabo 
+            libero vero quia asperiores similique dicta.
+        </p>
+
+        <div class="btn-home">
+            <a href="#" class="btn">Saber mas</a>
+            <a href="#" class="btn">Saber mas</a>
         </div>
-      </div>
-      <script>
-        function showContent(index) {
-          const sections = document.querySelectorAll('.body__item')
-          for (let i = 0; i < sections.length; i++) {
-            const section = sections[i]
-            if (i === index) {
-              section.classList.add('body__item__active')
-            } else {
-              section.classList.remove('body__item__active')
-            }
-          }
-        }
-      </script>
-    </body>
-  </htm>
+    </header>
+
+    </section>
+
+    <section class="content about">
+
+        <h2 class="title">Nosotros</h2>
+        <p>Lorem ipsum dolor sit amet consectetur 
+            adipisicing elit. Ut soluta similique 
+            quia reprehenderit eligendi aliquam. Sit 
+            odio impedit quibusdam. Velit corporis, 
+            optio debitis quidem ex ipsam rerum dolorem autem sequi.
+        </p>
+
+    </section>
+    
+
+    <section class="content sau">
+
+        <h2 class="title">Cursos</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing 
+            elit. Veritatis excepturi dolore, harum asperiores 
+            cupiditate officiis quia odit reiciendis quidem iure 
+            architecto laudantium 
+            nihil saepe pariatur vel labore molestias consectetur veniam?</p>
+        
+        <div class="box-container">
+
+            <div class="box">
+                <i class="fab fa-angular"></i>
+                <h3>Matematica</h3>
+                <p>labore molestias consectetur veniam</p>
+            </div>
+            <div class="box">
+                <i class="fab fa-apple"></i>
+                <h3>Comunicacion</h3>
+                <p>labore molestias consectetur veniam</p>
+            </div>
+            <div class="box">
+                <i class="fab fa-android"></i>
+                <h3>Programacion</h3>
+                <p>labore molestias consectetur veniam</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    </section>
+
+    <section class="content price">
+
+        <article class="contain">
+          <h2 class="title">Planes</h2>
+          <div class="box-container">
+      
+            <div class="box">
+              <i class="fab fa-angular"></i>
+              <h3>Free</h3>
+              <p>labore molestias consectetur veniam</p>
+            </div>
+            <div class="box">
+              <i class="fab fa-apple"></i>
+              <h3>Premium</h3>
+              <p>labore molestias consectetur veniam</p>
+            </div>
+      
+          </div>
+      
+        </article>
+      
+      </section>
+      
+      <section class="content contact">
+        <figure class="map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1102.5172021540711!2d-77.02287917346422!3d-12.135490073747622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sutec!5e0!3m2!1ses!2spe!4v1684115630557!5m2!1ses!2spe"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </figure>
+      </section>
+      
+      </body>
+      </html>
+      

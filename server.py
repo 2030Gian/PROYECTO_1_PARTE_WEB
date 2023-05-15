@@ -1,6 +1,8 @@
 from flask import (
     Flask,
     render_template, 
+    redirect, 
+    url_for
     )
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -83,9 +85,6 @@ class Freemium(Usuario):
 
 with app.app_context():
     db.create_all()
-        
-with app.app_context():
-    db.create_all()
 
     new_user = Usuario(
         nombre='John',
@@ -107,6 +106,11 @@ with app.app_context():
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
 
 
 # Run the app
