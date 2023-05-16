@@ -1,105 +1,188 @@
 from flask import (
     Flask,
     render_template, 
-    redirect, 
-    url_for
+    request
     )
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+
 import uuid;
 from datetime import datetime
+from sqlalchemy import LargeBinary
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
-db = SQLAlchemy(app)
+server = Flask(__name__)
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
+db = SQLAlchemy(server)
 
 #Models
+class Student(db.Model):
+    __tablename__ = 'students'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    apellido = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(80), nullable = False)
+    celular = db.Column(db.Integer, nullable = True)
+    contrasena = db.Column(db.String(80), nullable=False)
+    foto = db.Column(LargeBinary, nullable=True)
+    universidad = db.Column(db.String(50), nullable = False)
+    ciclo  = db.Column(db.Integer, nullable = True)
+    carrera = db.Column(db.String(80), nullable = True)
+    fecha_nacimiento = db.Column(db.Date(), nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
 
-from sqlalchemy import func
-
-class Usuario(db.Model):
-    __tablename__ = 'usuarios'
-    id = db.Column(db.String(36), nullable=False, default=lambda: str(uuid.uuid4()), primary_key=True)
-    nombre = db.Column(db.String(), nullable=False)
-    apellido = db.Column(db.String(), nullable=False)
-    email = db.Column(db.String(), nullable=False)
-    contrase単a = db.Column(db.String(), nullable=False)
-    foto = db.Column(db.String(), nullable=True)
-    fecha_nacimiento = db.Column(db.Date(), nullable=True)
-    biografia = db.Column(db.String(), nullable=True)
-    intereses = db.Column(db.String(), nullable=True)
-    created_at = db.Column(db.DateTime, default=func.now())
-
-    def __init__(self, nombre, apellido, email, contrase単a, foto=None, fecha_nacimiento=None, biografia=None, intereses=None):
+    def __init__(self, nombre, apellido, universidad, fecha_nacimiento, email,contrasena, celular=None, 
+                 foto=None, ciclo=None,carrera=None):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
-        self.contrase単a = contrase単a
+        self.celular = celular
+        self.contrasena = contrasena
         self.foto = foto
+        self.universidad = universidad
+        self.ciclo = ciclo
+        self.carrera = carrera
         self.fecha_nacimiento = fecha_nacimiento
-        self.biografia = biografia
-        self.intereses = intereses
-
-    def __repr__(self):
-        return f"Usuario(id={self.id}, nombre={self.nombre}, apellido={self.apellido})"
 
 
-class Cursos(db.Model):
-    __tablename__ = 'Curso'
-    id = db.Column(db.String(7), primary_key=True)
-    nombre = db.Column(db.String(30), nullable=False)
-    precio = db.Column(db.Float, nullable=False)
-    descripcion = db.Column(db.String(500), nullable=False)
-    foto = db.Column(db.String(500), nullable=True)
-    cupos_disponibles = db.Column(db.Integer, nullable=False)
-    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+class Course(db.Model):
+    __tablename__ = 'courses'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
+    foto = db.Column(LargeBinary, nullable=False)
+    
 
 
-    def __init__(self, nombre, precio, descripcion, foto, cupos_disponibles):
-        self.id = str(uuid.uuid4())
+    def __init__(self, nombre, precio, descripcion, foto):
         self.nombre = nombre
-        self.precio = precio
         self.descripcion = descripcion
         self.foto = foto
-        self.cupos_disponibles = cupos_disponibles
+      
 
-    def __repr__(self):
-        return f"Cursos(id={self.id}, nombre={self.nombre}, precio={self.precio})"
+class Controlador(db.Model):
+    __tablename__ = 'controladores'
+    id = db.Column(db.Integer, primary_key=True)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    def __init__(self,fecha_creacion):
+        self.fecha_creacion = fecha_creacion
 
-    
-class Premium(Usuario):
+      
+class Premium(db.Model):
     __tablename__ = 'premium'
-    __mapper_args__ = {
-        'polymorphic_identity': 'miembro_pay',
-    }
-    def __init__(self, name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle):
-        super().__init__(name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle)
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    apellido = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(80), nullable = False)
+    celular = db.Column(db.Integer, nullable = True)
+    contrasena = db.Column(db.String(80), nullable=False)
+    foto = db.Column(LargeBinary, nullable=True)
+    universidad = db.Column(db.String(50), nullable = False)
+    ciclo  = db.Column(db.Integer, nullable = True)
+    carrera = db.Column(db.String(80), nullable = True)
+    fecha_nacimiento = db.Column(db.Date(), nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
 
-class Freemium(Usuario):
-    __tablename__ = 'freemium'
-    __mapper_args__ = {
-        'polymorphic_identity': 'miembro_free',
-    }
-    def __init__(self, name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle):
-        super().__init__(name, lastname, nickname, fecha_de_nacimiento, codeforces_handle, atcoder_handle, vjudge_handle)
+    def __init__(self, nombre, apellido, universidad, fecha_nacimiento, email,contrasena, celular=None, 
+                 foto=None, ciclo=None,carrera=None):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.celular = celular
+        self.contrasena = contrasena
+        self.foto = foto
+        self.universidad = universidad
+        self.ciclo = ciclo
+        self.carrera = carrera
+        self.fecha_nacimiento = fecha_nacimiento
 
-with app.app_context():
+class nivel(db.Model):
+    __tablename__ = 'niveles'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    apellido = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(80), nullable = False)
+    celular = db.Column(db.Integer, nullable = True)
+    contrasena = db.Column(db.String(80), nullable=False)
+    foto = db.Column(LargeBinary, nullable=True)
+    universidad = db.Column(db.String(50), nullable = False)
+    ciclo  = db.Column(db.Integer, nullable = True)
+    carrera = db.Column(db.String(80), nullable = True)
+    fecha_nacimiento = db.Column(db.Date(), nullable=False)
+    nivel = db.Column(db.String(10), nullable = False)
+    curso = db.Column(db.String(80), nullable = False)
+    promedio = db.Column(db.Float, nullable = False)
+    aprobado = db.Column(db.Boolean, default = False)
+
+    def __init__(self, nombre, apellido, universidad, fecha_nacimiento, email,contrasena, 
+                 curso,nivel,promedio,aprobado,celular=None,foto=None, ciclo=None,carrera=None):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.celular = celular
+        self.contrasena = contrasena
+        self.foto = foto
+        self.universidad = universidad
+        self.ciclo = ciclo
+        self.carrera = carrera
+        self.fecha_nacimiento = fecha_nacimiento
+        self.nivel = nivel
+        self.curso = curso
+        self.promedio = promedio
+        self.aprobado = aprobado
+
+
+
+class examen(db.Model):
+    __tablename__ = 'examenes'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), nullable=False)
+    nota = db.Column(db.Float, nullable = False)
+
+    def __init__(self, nombre, nota):
+        self.nombre = nombre
+        self.nota = nota
+
+with server.app_context():
     db.create_all()
 
 #routes
-@app.route('/', methods=['GET'])
+@server.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
-@app.route('/login', methods=['GET'])
+@server.route('/login', methods=['GET'])
 def login():
+    usuarios_registrado = Student.query.filter()
     return render_template('login.html')
+
+@server.route('/crear-cuenta', methods=['GET', 'POST'])
+def crear_cuenta():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        email = request.form['email']
+        celular = request.form['celular']
+        contrasena = request.form['contrasena']  # Updated argument name
+        #foto = request.form['foto']
+        universidad = request.form['universidad']
+        ciclo = request.form['ciclo']
+        carrera = request.form['carrera']
+        fecha_nacimiento = datetime.strptime(request.form['fecha_nacimiento'], '%Y-%m-%d').date()
+
+        usuario = Student(nombre=nombre, apellido=apellido, email=email, celular=celular, 
+                          contrasena=contrasena, universidad=universidad,
+                          ciclo=ciclo, carrera=carrera, fecha_nacimiento=fecha_nacimiento)
+        
+        db.session.add(usuario)
+        db.session.commit()
+    return render_template('crear_cuenta.html')
+
+
 
 
 
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    server.run(debug=True)
 else:
     print('Importing {}'.format(__name__))    
     
