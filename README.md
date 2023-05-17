@@ -23,17 +23,17 @@ Nuestra misión es proporcionar una plataforma en línea que ofrezca cursos de m
 Nuestra visión es ser reconocidos como líderes en la educación en línea de matemáticas, comunicación y programación. Nos esforzamos por ser la opción preferida de estudiantes de todas las edades y niveles, brindando cursos de calidad, recursos interactivos y un entorno de aprendizaje colaborativo.
 
 ## Librerias
-Flask: Es un framework de desarrollo web ligero y flexible escrito en Python. Proporciona herramientas y funcionalidades para crear aplicaciones web rápidas y eficientes.
+Flask: es un marco de desarrollo web escrito en Python que se caracteriza por su ligereza y flexibilidad. Ofrece herramientas y funcionalidades para crear aplicaciones web eficientes y de manera rápida.
 
-Flask-SQLAlchemy: Es una extensión de Flask que simplifica la integración y el uso de bases de datos SQLAlchemy en aplicaciones Flask.
+Flask-SQLAlchemy: es una extensión de Flask que simplifica la integración y el uso de la biblioteca SQLAlchemy para interactuar con bases de datos en aplicaciones Flask.
 
-UUID: Es un identificador único universalmente utilizado en sistemas de software. Un UUID se representa como una cadena de caracteres alfanuméricos de 128 bits
+UUID: es un sistema de identificación único ampliamente utilizado en software. Se representa como una cadena alfanumérica de 128 bits, que garantiza una baja probabilidad de colisión entre identificadores generados.
 
-Datetime: Es un módulo en Python que proporciona clases y funciones para trabajar con fechas y horas.
+Datetime: n módulo en Python que proporciona clases y funciones para manipular y trabajar con fechas y horas de manera eficiente.
 
-HTML: Es el lenguaje de marcado estándar utilizado para crear páginas web. Define la estructura y el contenido de una página web utilizando etiquetas y elementos que se interpretan por los navegadores web para mostrar el contenido de manera adecuada
+HTML: es un estándar utilizado para crear páginas web. Define la estructura y el contenido de una página utilizando etiquetas y elementos que los navegadores interpretan para mostrar el contenido correctamente.
 
-CSS: Es un lenguaje utilizado para definir el estilo y la presentación de documentos HTML. Permite controlar aspectos visuales como el diseño, los colores, las fuentes, el espaciado y otros efectos visuales de una página web. 
+CSS: es utilizado para definir la apariencia y presentación de documentos HTML. Permite controlar aspectos visuales como el diseño, los colores, las fuentes y otros efectos visuales de una página web 
 
 ## El nombre del script a ejecutar para iniciar la base de datos con datos:
 server.py
