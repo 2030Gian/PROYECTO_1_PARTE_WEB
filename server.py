@@ -1,19 +1,22 @@
 from flask import (
     Flask,
     render_template, 
-    request
+    request, 
     )
 from flask_sqlalchemy import SQLAlchemy
-
+from flask import session, flash, redirect, url_for
 import uuid;
 from datetime import datetime
 from sqlalchemy import LargeBinary
-from flask import session, flash, redirect, url_for
+
 server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(server)
 
 #Models
+
+from sqlalchemy import func
+
 class Student(db.Model):
     __tablename__ = 'students'
     id = db.Column(db.Integer, primary_key=True)
@@ -57,7 +60,6 @@ class Course(db.Model):
         self.descripcion = descripcion
         self.foto = foto
       
-
 class Controlador(db.Model):
     __tablename__ = 'controladores'
     id = db.Column(db.Integer, primary_key=True)
@@ -65,81 +67,27 @@ class Controlador(db.Model):
     def __init__(self,fecha_creacion):
         self.fecha_creacion = fecha_creacion
 
-      
-class Premium(db.Model):
-    __tablename__ = 'premium'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(80), nullable=False)
-    apellido = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(80), nullable = False)
-    celular = db.Column(db.Integer, nullable = True)
-    contrasena = db.Column(db.String(80), nullable=False)
-    foto = db.Column(LargeBinary, nullable=True)
-    universidad = db.Column(db.String(50), nullable = False)
-    ciclo  = db.Column(db.Integer, nullable = True)
-    carrera = db.Column(db.String(80), nullable = True)
-    fecha_nacimiento = db.Column(db.Date(), nullable=False)
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    
 
-    def __init__(self, nombre, apellido, universidad, fecha_nacimiento, email,contrasena, celular=None, 
-                 foto=None, ciclo=None,carrera=None):
+    
+class Premiuns(db.Model):
+    __tablename__ = "Premiun"
+    id = db.Column(db.String(7), primary_key=True)
+    nombre = db.Column(db.String(30), nullable=False)
+    contrasena = db.Column(db.String(), nullable=False)
+    tarjeta_credito = db.Column(db.String())
+    fecha_caducidad = db.Column(db.DateTime, default=datetime.utcnow)
+    numseguridad = db.Column(db.String())
+    tiempodesuscripcion = db.Column(db.Integer)
+
+    def __init__(self, id, nombre, contrasena, tarjeta_credito, fecha_caducidad, numseguridad, tiempodesuscripcion):
+        self.id = id
         self.nombre = nombre
-        self.apellido = apellido
-        self.email = email
-        self.celular = celular
         self.contrasena = contrasena
-        self.foto = foto
-        self.universidad = universidad
-        self.ciclo = ciclo
-        self.carrera = carrera
-        self.fecha_nacimiento = fecha_nacimiento
-
-class nivel(db.Model):
-    __tablename__ = 'niveles'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(80), nullable=False)
-    apellido = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(80), nullable = False)
-    celular = db.Column(db.Integer, nullable = True)
-    contrasena = db.Column(db.String(80), nullable=False)
-    foto = db.Column(LargeBinary, nullable=True)
-    universidad = db.Column(db.String(50), nullable = False)
-    ciclo  = db.Column(db.Integer, nullable = True)
-    carrera = db.Column(db.String(80), nullable = True)
-    fecha_nacimiento = db.Column(db.Date(), nullable=False)
-    nivel = db.Column(db.String(10), nullable = False)
-    curso = db.Column(db.String(80), nullable = False)
-    promedio = db.Column(db.Float, nullable = False)
-    aprobado = db.Column(db.Boolean, default = False)
-
-    def __init__(self, nombre, apellido, universidad, fecha_nacimiento, email,contrasena, 
-                 curso,nivel,promedio,aprobado,celular=None,foto=None, ciclo=None,carrera=None):
-        self.nombre = nombre
-        self.apellido = apellido
-        self.email = email
-        self.celular = celular
-        self.contrasena = contrasena
-        self.foto = foto
-        self.universidad = universidad
-        self.ciclo = ciclo
-        self.carrera = carrera
-        self.fecha_nacimiento = fecha_nacimiento
-        self.nivel = nivel
-        self.curso = curso
-        self.promedio = promedio
-        self.aprobado = aprobado
-
-
-
-class examen(db.Model):
-    __tablename__ = 'examenes'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(60), nullable=False)
-    nota = db.Column(db.Float, nullable = False)
-
-    def __init__(self, nombre, nota):
-        self.nombre = nombre
-        self.nota = nota
+        self.tarjeta_credito = tarjeta_credito
+        self.fecha_caducidad = fecha_caducidad
+        self.numseguridad = numseguridad
+        self.tiempodesuscripcion = tiempodesuscripcion
 
 with server.app_context():
     db.create_all()
@@ -148,6 +96,34 @@ with server.app_context():
 @server.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@server.route('/log', methods=['GET'])
+def log():
+    return render_template('login.html')
+
+@server.route('/cursos', methods=['GET'])
+def cursos():
+    return render_template('cursos.html')
+
+@server.route('/mate', methods=['GET'])
+def mate():
+    return render_template('mate.html')
+
+@server.route('/comu', methods=['GET'])
+def comu():
+    return render_template('comu.html')
+
+@server.route('/progra', methods=['GET'])
+def progra():
+    return render_template('progra.html')
+
+@server.route('/planes', methods=['GET'])
+def planes():
+    return render_template('planes.html')
+
+@server.route('/premiun', methods=['GET'])
+def premiun():
+    return render_template('premiun.html')
 
 @server.route('/perfil')
 def perfil():
@@ -164,7 +140,6 @@ def perfil():
         return redirect(url_for('login'))
 
     return render_template('perfil.html', usuario=usuario)
-
 
 @server.route('/login', methods=['GET', 'POST'])
 def login():
@@ -183,7 +158,7 @@ def login():
     
     return render_template('login.html')
 
-     
+
 @server.route('/crear-cuenta', methods=['GET', 'POST'])
 def crear_cuenta():
     if request.method == 'POST':
@@ -208,12 +183,31 @@ def crear_cuenta():
 
     return render_template('crear_cuenta.html')
 
+@server.route('/premiun', methods=['POST'])
+def premiun1():
+    nombre = request.form.get('nombre')
+    contrasena = request.form.get('contrasena')
+    tarjeta = request.form.get('tarjeta')
+    numseguridad = request.form.get('numseguridad')
+    caducidad = request.form.get('caducidad')
+    tiempo = request.form.get('tiempo')
 
+    # Crear una instancia de la clase Premiun con los datos del formulario
+    premiun = Premiuns(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
+    )
 
+    # Guardar el objeto en la base de datos
+    db.session.add(premiun)
+    db.session.commit()
+    db.session.close()
+    
+    return redirect('/cursos')  # Redirigir al usuario a cursos.html
 
 # Run the app
 if __name__ == '__main__':
     server.run(debug=True)
 else:
     print('Importing {}'.format(__name__))    
+    
+    
 
