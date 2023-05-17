@@ -192,16 +192,14 @@ def premiun1():
     caducidad = request.form.get('caducidad')
     tiempo = request.form.get('tiempo')
 
-    # Crear una instancia de la clase Premiun con los datos del formulario
     premiun = Premiuns(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
     )
 
-    # Guardar el objeto en la base de datos
     db.session.add(premiun)
     db.session.commit()
     db.session.close()
     
-    return redirect('/cursos')  # Redirigir al usuario a cursos.html
+    return redirect('/cursos') 
 
 # Run the app
 if __name__ == '__main__':
