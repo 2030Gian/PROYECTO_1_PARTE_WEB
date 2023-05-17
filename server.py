@@ -141,40 +141,6 @@ def premiun():
 def free12():
     return render_template('free.html')
 
-@server.route('/perfil')
-def perfil():
-    if 'user_id' not in session:
-        flash('Debes iniciar sesión para acceder a esta página.')
-        return redirect(url_for('login'))
-
-    user_id = session['user_id']
-
-    usuario = Student.query.get(user_id)
-
-    if not usuario:
-        flash('El usuario no existe.')
-        return redirect(url_for('login'))
-
-    return render_template('perfil.html', usuario=usuario)
-
-@server.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        contrasena = request.form['contrasena']
-        usuario = Student.query.filter_by(email=email).first()
-
-        if usuario and usuario.contrasena == contrasena:
-            session['user_id'] = usuario.id
-            flash('¡Inicio de sesión exitoso!')
-
-            return redirect(url_for('profile'))
-
-        #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
-    
-    return render_template('login.html')
-
-
 @server.route('/estudiante', methods=['GET', 'POST'])
 def crear_cuenta():
     if request.method == 'POST':
@@ -232,6 +198,39 @@ def free1():
     db.session.close()
     
     return redirect('/cursos') 
+
+@server.route('/perfil')
+def perfil():
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión para acceder a esta página.')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    usuario = Student.query.get(user_id)
+
+    if not usuario:
+        flash('El usuario no existe.')
+        return redirect(url_for('login'))
+
+    return render_template('perfil.html', usuario=usuario)
+
+@server.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        contrasena = request.form['contrasena']
+        usuario = Student.query.filter_by(email=email).first()
+
+        if usuario and usuario.contrasena == contrasena:
+            session['user_id'] = usuario.id
+            flash('¡Inicio de sesión exitoso!')
+
+            return redirect(url_for('profile'))
+
+        #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
+    
+    return render_template('login.html')
 
 # Run the app
 if __name__ == '__main__':
