@@ -13,7 +13,7 @@ from datetime import datetime
 from sqlalchemy import LargeBinary
 
 server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb69'
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(server)
 
 #Models
@@ -222,13 +222,10 @@ def login():
         contrasena = request.form['contrasena']
         usuario = Student.query.filter_by(email=email).first()
 
-        if usuario and usuario.contrasena == contrasena:
-            session['user_id'] = usuario.id
-            flash('¡Inicio de sesión exitoso!')
+        if usuario.contrasena == contrasena:
 
-            return redirect(url_for('profile'))
 
-        #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
+            return 'Bienvenido a nuestra plataforma {} {}'.format(usuario.nombre, usuario.apellido)
     
     return render_template('login.html')
 
