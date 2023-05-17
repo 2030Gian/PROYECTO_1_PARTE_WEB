@@ -10,7 +10,7 @@ from datetime import datetime
 from sqlalchemy import LargeBinary
 
 server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/educaweb1'
 db = SQLAlchemy(server)
 
 #Models
@@ -70,8 +70,8 @@ class Controlador(db.Model):
     
 
     
-class Premiuns(db.Model):
-    __tablename__ = "Premiun"
+class Premiun(db.Model):
+    __tablename__ = "premiuns"
     id = db.Column(db.String(7), primary_key=True)
     nombre = db.Column(db.String(30), nullable=False)
     contrasena = db.Column(db.String(), nullable=False)
@@ -88,6 +88,8 @@ class Premiuns(db.Model):
         self.fecha_caducidad = fecha_caducidad
         self.numseguridad = numseguridad
         self.tiempodesuscripcion = tiempodesuscripcion
+
+
 
 with server.app_context():
     db.create_all()
@@ -148,15 +150,29 @@ def login():
         contrasena = request.form['contrasena']
         usuario = Student.query.filter_by(email=email).first()
 
-        if usuario and usuario.contrasena == contrasena:
-            session['user_id'] = usuario.id
-            flash('¡Inicio de sesión exitoso!')
+        if usuario.contrasena == contrasena:
+            #flash('¡Inicio de sesión exitoso!')
 
-            return redirect(url_for('profile'))
+            return redirect(url_for('crear-cuenta'))
 
         #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
     
     return render_template('login.html')
+
+'''
+@server.route('/ingresar', methods = ['POST'])
+def login():
+
+     user_email = request.form['email']
+     user_contrasena = request.form['contrasena']
+     usuario = Student.query.filter_by(email=user_email).first()
+     return 'El usuario es {}'.format(usuario.name)
+
+
+    #return redirect(url_for('crear-cuenta'))
+
+'''
+
 
 
 @server.route('/crear-cuenta', methods=['GET', 'POST'])
@@ -179,7 +195,7 @@ def crear_cuenta():
         db.session.add(usuario)
         db.session.commit()
         #flash('¡Cuenta creada exitosamente! Por favor, inicia sesión.')
-        return redirect(url_for('login'))
+        return redirect(url_for('ingresar'))
 
     return render_template('crear_cuenta.html')
 
@@ -192,7 +208,7 @@ def premiun1():
     caducidad = request.form.get('caducidad')
     tiempo = request.form.get('tiempo')
 
-    premiun = Premiuns(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
+    premiun = premiun1(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
     )
 
     db.session.add(premiun)

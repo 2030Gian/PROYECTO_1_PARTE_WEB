@@ -18,9 +18,13 @@
         <div class="d-flex justify-content-center">
             <img src="/static/img/login-icon.svg" alt="login-icon" style="height: 7rem" />
         </div>
+
+
         <div class="text-center fs-1 fw-bold">Login</div>
-        <form action="http://127.0.0.1:5000/" method="GET">
+        <form action="/login" method="POST">
+
             <div class="input-group mt-4">
+                <label for="email"></label>
                 <style>
                     .bg-purple {
                         background-color: purple;
@@ -33,18 +37,31 @@
                         style="height: 1rem"
                     />
                 </div>
-                <input class="form-control bg-light" type="text" placeholder="Username" />
+                <input class="form-control bg-light" type="text" name = "email" placeholder="email" />
             </div>
-            <div class="input-group mt-1">
+
+
+            
+            
+            <div class="input-group mt-4">
+                <label for="contrasena"></label>
+                <style>
+                    .bg-purple {
+                        background-color: purple;
+                    }
+                </style>
                 <div class="input-group-text bg-purple">
                     <img
-                        src="/static/img/password-icon.svg"
-                        alt="password-icon"
+                        src="/static/img/username-icon.svg"
+                        alt="username-icon"
                         style="height: 1rem"
                     />
                 </div>
-                <input class="form-control bg-light" type="password" placeholder="Password" />
+                <input class="form-control bg-light" type="text" name = "contrasena" placeholder="Contraseña" />
             </div>
+
+
+
             <div class="d-flex justify-content-around mt-1">
                 <div class="d-flex align-items-center gap-1"></div>
                 <div class="pt-1"></div>

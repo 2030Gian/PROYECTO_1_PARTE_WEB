@@ -1,0 +1,40 @@
+<html>
+<head>
+
+    <title>Utec DBP20</title>
+    
+</head>
+<body>
+
+    <h1>Students of UTEC</h1>
+
+    <ul>
+        {% for d in data %}
+        <li>{{d.id}}  {{d.name}} - {{d.lastname}}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>New register </h1>
+
+        <form action = "/ingresar" method = "GET">
+    
+            <div>
+                <label for="email"> Name</label>
+                <input type="text" name="email" id="email"> 
+            </div>
+    
+            <div>
+                <label for="contrasena">Contraseña:</label>
+                <input type="text" name="contrasena" id="contrasena"> 
+            </div>
+    
+           
+            <div>
+                <input type="submit" value="submit"/>
+            </div>
+    
+        </form>  
+
+</body>
+
+</html>
