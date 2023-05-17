@@ -2,9 +2,12 @@ from flask import (
     Flask,
     render_template, 
     request, 
+    session, 
+    flash, 
+    redirect, 
+    url_for
     )
 from flask_sqlalchemy import SQLAlchemy
-from flask import session, flash, redirect, url_for
 import uuid;
 from datetime import datetime
 from sqlalchemy import LargeBinary
@@ -15,7 +18,6 @@ db = SQLAlchemy(server)
 
 #Models
 
-from sqlalchemy import func
 
 class Student(db.Model):
     __tablename__ = 'students'
