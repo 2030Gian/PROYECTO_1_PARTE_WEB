@@ -10,7 +10,7 @@ from datetime import datetime
 from sqlalchemy import LargeBinary
 
 server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb1'
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hp:1234@localhost:5432/educaweb69'
 db = SQLAlchemy(server)
 
 #Models
@@ -53,8 +53,6 @@ class Course(db.Model):
     descripcion = db.Column(db.Text, nullable=False)
     foto = db.Column(LargeBinary, nullable=False)
     
-
-
     def __init__(self, nombre, precio, descripcion, foto):
         self.nombre = nombre
         self.descripcion = descripcion
@@ -67,9 +65,8 @@ class Controlador(db.Model):
     def __init__(self,fecha_creacion):
         self.fecha_creacion = fecha_creacion
 
-    
 
-    
+   
 class Premiuns(db.Model):
     __tablename__ = "Premiun"
     id = db.Column(db.String(7), primary_key=True)
@@ -89,6 +86,19 @@ class Premiuns(db.Model):
         self.numseguridad = numseguridad
         self.tiempodesuscripcion = tiempodesuscripcion
 
+class Frees(db.Model):
+    __tablename__ = "Free"
+    id = db.Column(db.String(7), primary_key=True)
+    nombre2 = db.Column(db.String(30), nullable=False)
+    contrasena2 = db.Column(db.String(), nullable=False)
+    cursoseleccionado2 =  db.Column(db.String(60), nullable=False)
+    
+    def __init__(self, id, nombre2, contrasena2, cursoseleccionado):
+        self.id = id
+        self.nombre2 = nombre2
+        self.contrasena2 = contrasena2
+        self.cursoseleccionado = cursoseleccionado
+        
 with server.app_context():
     db.create_all()
 
@@ -125,6 +135,10 @@ def planes():
 def premiun():
     return render_template('premiun.html')
 
+@server.route('/free', methods=['GET'])
+def free12():
+    return render_template('free.html')
+
 @server.route('/perfil')
 def perfil():
     if 'user_id' not in session:
@@ -159,7 +173,7 @@ def login():
     return render_template('login.html')
 
 
-@server.route('/crear-cuenta', methods=['GET', 'POST'])
+@server.route('/estudiante', methods=['GET', 'POST'])
 def crear_cuenta():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -192,10 +206,26 @@ def premiun1():
     caducidad = request.form.get('caducidad')
     tiempo = request.form.get('tiempo')
 
+    tiempo = int(tiempo) if tiempo is not None else 0
+
     premiun = Premiuns(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
-    )
+)
 
     db.session.add(premiun)
+    db.session.commit()
+    db.session.close()
+    
+    return redirect('/cursos') 
+
+@server.route('/free', methods=['POST'])
+def free1():
+    nombre2 = request.form.get('nombre')
+    contrasena2 = request.form.get('contrasena')
+    cursoseleccionado = request.form.get('curso')
+
+    Free = Frees(id=str(uuid.uuid4())[:7],nombre2=nombre2,contrasena2=contrasena2,cursoseleccionado = cursoseleccionado)
+
+    db.session.add(Free)
     db.session.commit()
     db.session.close()
     
