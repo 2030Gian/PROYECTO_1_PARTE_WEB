@@ -45,6 +45,6 @@ localhost
 5432
 
 ## Cómo ejecutar el sistema: 
-git clone https://github.com/2030Gian/PROYECTO_1_PARTE_WEB.git
-Correr en el terminal para instalar todas las dependencias: pip install -r requirements.txt
-Correr server.py
+- git clone https://github.com/2030Gian/PROYECTO_1_PARTE_WEB.git
+- Correr en el terminal para instalar todas las dependencias: pip install -r requerimientos.txt
+- Correr server.py
