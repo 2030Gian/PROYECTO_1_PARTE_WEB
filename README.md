@@ -23,7 +23,7 @@ Nuestra misión es proporcionar una plataforma en línea que ofrezca cursos de m
 Nuestra visión es ser reconocidos como líderes en la educación en línea de matemáticas, comunicación y programación. Nos esforzamos por ser la opción preferida de estudiantes de todas las edades y niveles, brindando cursos de calidad, recursos interactivos y un entorno de aprendizaje colaborativo.
 
 ## Librerias
-Flask: es un marco de desarrollo web escrito en Python que se caracteriza por su ligereza y flexibilidad. Ofrece herramientas y funcionalidades para crear aplicaciones web eficientes y de manera rápida.
+Flask: es un marco de desarrollo web escrito en Python que se caracteriza por su ligereza y flexibilidad. Ofrece herramientas y funcionalidades para crear aplicaciones web eficientes y de manera rápida. Lo usamos para la importación de los módulos necesarios: Los módulos de Flask necesarios se importan al comienzo del código. Estos incluyen Flask, render_template, redirect, request y url_for del módulo flask, así como SQLAlchemy y Migrate para manejar la base de datos.
 
 Flask-SQLAlchemy: es una extensión de Flask que simplifica la integración y el uso de la biblioteca SQLAlchemy para interactuar con bases de datos en aplicaciones Flask.
 
