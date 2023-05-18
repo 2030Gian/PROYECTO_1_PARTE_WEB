@@ -1,0 +1,23 @@
+<html>
+<head>
+
+    <title>Perfil</title>
+    
+</head>
+<body>
+
+    <h1>Perfil del estudiante</h1>
+
+    <ul>
+        {% for d in data %}
+        <h1> Datos Personales</h1>
+        <li>{{d.id}}  {{d.name}} - {{d.lastname}}</li>
+        {% endfor %}
+    </ul>
+
+
+     
+
+</body>
+
+</html>

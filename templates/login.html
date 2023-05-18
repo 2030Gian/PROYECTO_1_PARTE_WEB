@@ -18,13 +18,10 @@
         <div class="d-flex justify-content-center">
             <img src="/static/img/login-icon.svg" alt="login-icon" style="height: 7rem" />
         </div>
-
-
         <div class="text-center fs-1 fw-bold">Login</div>
         <form action="/login" method="POST">
 
-            <div class="input-group mt-4">
-                <label for="email"></label>
+            <div>
                 <style>
                     .bg-purple {
                         background-color: purple;
@@ -37,27 +34,23 @@
                         style="height: 1rem"
                     />
                 </div>
-                <input class="form-control bg-light" type="text" name = "email" placeholder="email" />
+                <label for="email"> Email</label>
+                <input type="text" name="email" id="email"> 
             </div>
 
 
-            
-            
-            <div class="input-group mt-4">
-                <label for="contrasena"></label>
-                <style>
-                    .bg-purple {
-                        background-color: purple;
-                    }
-                </style>
+            <div class="input-group mt-1">
                 <div class="input-group-text bg-purple">
                     <img
-                        src="/static/img/username-icon.svg"
-                        alt="username-icon"
+                        src="/static/img/password-icon.svg"
+                        alt="password-icon"
                         style="height: 1rem"
                     />
                 </div>
-                <input class="form-control bg-light" type="text" name = "contrasena" placeholder="Contraseña" />
+
+                <label for="contrasena"> Contraseña</label>
+                <input type="text" name="contrasena" id="contrasena">
+                
             </div>
 
 
@@ -80,7 +73,7 @@
             </button>
             <div class="d-flex gap-1 justify-content-center mt-1">
                 <div>¿No tienes una cuenta?</div>
-                <a href="/crear-cuenta" class="text-decoration-none text-purple fw-semibold"
+                <a href="/estudiante" class="text-decoration-none text-purple fw-semibold"
                     >Crea una cuenta</a
                 >
             </div>

@@ -127,6 +127,7 @@ def planes():
 def premiun():
     return render_template('premiun.html')
 
+
 @server.route('/perfil')
 def perfil():
     if 'user_id' not in session:
@@ -141,7 +142,8 @@ def perfil():
         flash('El usuario no existe.')
         return redirect(url_for('login'))
 
-    return render_template('perfil.html', usuario=usuario)
+    return render_template('perfile.html', usuario=usuario)
+
 
 @server.route('/login', methods=['GET', 'POST'])
 def login():
@@ -151,27 +153,11 @@ def login():
         usuario = Student.query.filter_by(email=email).first()
 
         if usuario.contrasena == contrasena:
-            #flash('¡Inicio de sesión exitoso!')
 
-            return redirect(url_for('crear-cuenta'))
-
-        #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
+            return redirect(url_for('perfil'))
     
     return render_template('login.html')
 
-'''
-@server.route('/ingresar', methods = ['POST'])
-def login():
-
-     user_email = request.form['email']
-     user_contrasena = request.form['contrasena']
-     usuario = Student.query.filter_by(email=user_email).first()
-     return 'El usuario es {}'.format(usuario.name)
-
-
-    #return redirect(url_for('crear-cuenta'))
-
-'''
 
 
 
@@ -195,7 +181,7 @@ def crear_cuenta():
         db.session.add(usuario)
         db.session.commit()
         #flash('¡Cuenta creada exitosamente! Por favor, inicia sesión.')
-        return redirect(url_for('ingresar'))
+        return redirect(url_for('login'))
 
     return render_template('crear_cuenta.html')
 
