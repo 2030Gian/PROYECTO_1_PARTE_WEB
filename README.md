@@ -11,12 +11,12 @@ Ofrecemos cursos online en matemáticas, programación y comunicación, dirigido
 
 # Objetivos principales 
 -Proporcionar cursos en línea de alta calidad en las áreas de matemáticas, comunicación y programación.
--Facilitar el acceso a la educación en estas áreas, ofreciendo opciones de planes premium y gratuitos.
+-Facilitar el acceso a la educación en estas áreas.
 -Fomentar el aprendizaje continuo y el desarrollo de habilidades en matemáticas, comunicación y programación.
 
 ## Misión
 
-Nuestra misión es proporcionar una plataforma en línea que ofrezca cursos de matemáticas, comunicación y programación de alta calidad. Nos esforzamos por facilitar el acceso a la educación en estas áreas, brindando opciones de planes premium y gratuitos para que todos puedan aprender y desarrollar habilidades clave en un entorno flexible y conveniente.
+Nuestra misión es proporcionar una plataforma en línea que ofrezca cursos de matemáticas, comunicación y programación de alta calidad. para que todos puedan aprender y desarrollar habilidades clave en un entorno flexible y conveniente.
 
 ## Visión
 
