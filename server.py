@@ -2,9 +2,12 @@ from flask import (
     Flask,
     render_template, 
     request, 
+    session, 
+    flash, 
+    redirect, 
+    url_for
     )
 from flask_sqlalchemy import SQLAlchemy
-from flask import session, flash, redirect, url_for
 import uuid;
 from datetime import datetime
 from sqlalchemy import LargeBinary
@@ -15,7 +18,6 @@ db = SQLAlchemy(server)
 
 #Models
 
-from sqlalchemy import func
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -53,8 +55,6 @@ class Course(db.Model):
     descripcion = db.Column(db.Text, nullable=False)
     foto = db.Column(LargeBinary, nullable=False)
     
-
-
     def __init__(self, nombre, precio, descripcion, foto):
         self.nombre = nombre
         self.descripcion = descripcion
@@ -67,11 +67,10 @@ class Controlador(db.Model):
     def __init__(self,fecha_creacion):
         self.fecha_creacion = fecha_creacion
 
-    
 
     
-class Premiun(db.Model):
-    __tablename__ = "premiuns"
+class Premiuns(db.Model):
+    __tablename__ = "Premiun"
     id = db.Column(db.String(7), primary_key=True)
     nombre = db.Column(db.String(30), nullable=False)
     contrasena = db.Column(db.String(), nullable=False)
@@ -88,8 +87,6 @@ class Premiun(db.Model):
         self.fecha_caducidad = fecha_caducidad
         self.numseguridad = numseguridad
         self.tiempodesuscripcion = tiempodesuscripcion
-
-
 
 with server.app_context():
     db.create_all()
@@ -127,7 +124,6 @@ def planes():
 def premiun():
     return render_template('premiun.html')
 
-
 @server.route('/perfil')
 def perfil():
     if 'user_id' not in session:
@@ -142,8 +138,7 @@ def perfil():
         flash('El usuario no existe.')
         return redirect(url_for('login'))
 
-    return render_template('perfile.html', usuario=usuario)
-
+    return render_template('perfil.html', usuario=usuario)
 
 @server.route('/login', methods=['GET', 'POST'])
 def login():
@@ -152,13 +147,15 @@ def login():
         contrasena = request.form['contrasena']
         usuario = Student.query.filter_by(email=email).first()
 
-        if usuario.contrasena == contrasena:
+        if usuario and usuario.contrasena == contrasena:
+            session['user_id'] = usuario.id
+            flash('¡Inicio de sesión exitoso!')
 
-            return redirect(url_for('perfil'))
+            return redirect(url_for('profile'))
+
+        #flash('Credenciales inválidas. Por favor, inténtalo de nuevo.')
     
     return render_template('login.html')
-
-
 
 
 @server.route('/crear-cuenta', methods=['GET', 'POST'])
@@ -194,7 +191,7 @@ def premiun1():
     caducidad = request.form.get('caducidad')
     tiempo = request.form.get('tiempo')
 
-    premiun = premiun1(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
+    premiun = Premiuns(id=str(uuid.uuid4())[:7],nombre=nombre,contrasena=contrasena,tarjeta_credito=tarjeta,fecha_caducidad=caducidad,numseguridad=numseguridad,tiempodesuscripcion=int(tiempo)
     )
 
     db.session.add(premiun)
@@ -202,6 +199,50 @@ def premiun1():
     db.session.close()
     
     return redirect('/cursos') 
+
+@server.route('/free', methods=['POST'])
+def free1():
+    nombre2 = request.form.get('nombre')
+    contrasena2 = request.form.get('contrasena')
+    cursoseleccionado = request.form.get('curso')
+
+    Free = Frees(id=str(uuid.uuid4())[:7],nombre2=nombre2,contrasena2=contrasena2,cursoseleccionado = cursoseleccionado)
+
+    db.session.add(Free)
+    db.session.commit()
+    db.session.close()
+    
+    return redirect('/cursos') 
+
+@server.route('/perfil')
+def perfil():
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión para acceder a esta página.')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    usuario = Student.query.get(user_id)
+
+    if not usuario:
+        flash('El usuario no existe.')
+        return redirect(url_for('login'))
+
+    return render_template('perfil.html', usuario=usuario)
+
+@server.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        contrasena = request.form['contrasena']
+        usuario = Student.query.filter_by(email=email).first()
+
+        if usuario.contrasena == contrasena:
+
+
+            return 'Bienvenido a nuestra plataforma {} {}'.format(usuario.nombre, usuario.apellido)
+    
+    return render_template('login.html')
 
 # Run the app
 if __name__ == '__main__':
